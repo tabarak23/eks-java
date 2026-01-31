@@ -1,11 +1,24 @@
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "us-west-1"
 }
 
 variable "clusterName" {
-  description = "Name of the EKS cluster"
+  description = "Base name of EKS cluster"
   type        = string
-  default     = "tabarakvprofile"
+}
+
+variable "environment" {
+  description = "Environment name (staging or prod)"
+  type        = string
+}
+
+variable "node_instance_type" {
+  description = "EC2 instance type for EKS worker nodes"
+  type        = string
+}
+
+variable "node_count" {
+  description = "Number of EKS worker nodes"
+  type        = number
 }

@@ -11,28 +11,17 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
-
   }
 
   eks_managed_node_groups = {
-    one = {
-      name = "node-group-1"
+    default = {
+      name = "ng-${var.environment}"
 
-      instance_types = ["t3.small"]
+      instance_types = [var.node_instance_type]
 
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
-    }
-
-    two = {
-      name = "node-group-2"
-
-      instance_types = ["t3.small"]
-
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+      min_size     = var.node_count
+      max_size     = var.node_count + 1
+      desired_size = var.node_count
     }
   }
 }

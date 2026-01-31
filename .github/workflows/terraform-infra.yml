@@ -14,8 +14,10 @@ on:
       - terraform/**
 env:
   AWS_REGION: us-west-1
+  TFVARS_FILE: staging.tfvars
+
   #clister name
-  EKS_CLUSTER: tabarakvprofile
+  EKS_CLUSTER: tabarakvprofile-staging
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #bucket for terraform state
@@ -57,7 +59,11 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -input=false
+        run: |
+          terraform plan \
+            -var-file=${{ env.TFVARS_FILE }} \
+            -input=false \
+            -no-color
         continue-on-error: false
 
       - name: terraform plan status
@@ -67,7 +73,11 @@ jobs:
       - name: Terraform apply only on main branch
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: |
+          terraform apply \
+            -var-file=${{ env.TFVARS_FILE }} \
+            -auto-approve \
+            -input=false
 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -78,8 +88,11 @@ jobs:
 
       - name: get kube config file
         id: getconfig
-        if: steps.apply.outcome == 'success'
-        run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }}    
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          aws eks update-kubeconfig \
+          --region ${{ env.AWS_REGION }} \
+          --name ${{ env.EKS_CLUSTER }}   
 
 
       - name: Install Ingress controller
