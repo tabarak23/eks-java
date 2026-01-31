@@ -1,0 +1,63 @@
+name: "Vprofile eks project"
+on:
+  push:
+    branches:
+      - main
+      - staging
+    paths:
+      - terraform/**
+  pull_request:
+    branches:
+      - main
+      - staging
+    paths:
+      - terraform/**
+env:
+  AWS_REGION: us-west-1
+  #clister name
+  EKS_CLUSTER: tabarakvprofile
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #bucket for terraform state
+  BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE }}
+
+jobs:
+  terraform:
+    name: "appky terraform code changes"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup terraform with respective version 
+        uses: hashicorp/setup-terraform@v2
+        #leaving this blankk so that it takes the latet version
+        #with:
+         # terraform_version: 1.6.3
+
+      - name: terraform init
+        id: init
+        run: terraform init -backend-config="bucket=${{ env.BUCKET_TF_STATE }}" 
+
+      - name: terraform fmt
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: false
+
+      - name: terraform plan status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+      
+        
