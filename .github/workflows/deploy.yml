@@ -1,5 +1,26 @@
 name: vprofile actions
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - main
+      - staging
+    paths:
+      - '**.java'
+      - 'pom.xml'
+      - 'Dockerfile'
+      - 'helm/**'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches:
+      - main
+      - staging
+    paths:
+      - '**.java'
+      - 'pom.xml'
+      - 'Dockerfile'
+      - 'helm/**'
+      - '.github/workflows/deploy.yml'
+
 env:
   AWS_REGION: us-west-1
   ECR_REPOSITORY: tabarak_vprofileapp
