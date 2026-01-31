@@ -35,9 +35,8 @@ jobs:
 
       - name: Setup terraform with respective version 
         uses: hashicorp/setup-terraform@v2
-        #leaving this blankk so that it takes the latet version
-        #with:
-         # terraform_version: 1.6.3
+        with:
+          terraform_version: 1.6.3
 
       - name: terraform init
         id: init
