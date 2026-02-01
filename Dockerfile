@@ -1,22 +1,41 @@
-FROM eclipse-temurin:17-jdk AS build
+#build stage
+FROM maven:3.9.9-eclipse-temurin-21-jammy AS foundation
 
-WORKDIR /app
+WORKDIR /base
 
-
+# copy only pom.xml first for cache
 COPY pom.xml .
-RUN apt-get update && apt-get install -y maven \
-    && mvn dependency:go-offline
+RUN mvn dependency:go-offline
 
 
+
+# copy source and build
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM tomcat:9.0-jdk17-temurin
-LABEL project="Vprofile"
-LABEL author="tabarak23"
+#runtime stage
+FROM tomcat:10.1-jdk21
 
+
+
+#creating non root user
+
+
+
+RUN useradd -r -u 1001 -g root tomcatuser
+
+
+
+LABEL project="vprofile"
+LABEL maintainer="tabarak23"
+
+# remove default apps
 RUN rm -rf /usr/local/tomcat/webapps/*
-COPY --from=build /app/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
+
+
+COPY --from=foundation /base/target/vprofile-v2.war \
+     /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
+
 CMD ["catalina.sh", "run"]
