@@ -22,8 +22,8 @@
 
         <junit.version>4.13.2</junit.version>
         <logback.version>1.5.6</logback.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+
     </properties>
 
 
@@ -263,6 +263,14 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
                 </configuration>
             </plugin>
 
