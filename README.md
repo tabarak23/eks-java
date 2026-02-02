@@ -1,46 +1,46 @@
-🚀 3-Tier Application Deployment on AWS EKS
+ 3-Tier Application Deployment on AWS EKS
 
 This project demonstrates a production-style 3-tier architecture deployed on AWS EKS, fully automated using Terraform, GitHub Actions, Docker, Helm, and Kubernetes.
 
 It follows real-world GitOps & CI/CD best practices, including:
 
-🏗️ Infrastructure as Code (IaC)
+Infrastructure as Code (IaC)
 
-🔀 Pull Request–based approvals
+ Pull Request–based approvals
 
-🔁 Separate CI & CD workflows
+ Separate CI & CD workflows
 
-🐳 Containerized microservices
+Containerized microservices
 
-☸️ Kubernetes orchestration with Helm
+Kubernetes orchestration with Helm
 
-🏗️ Architecture Overview
+ Architecture Overview
 🔹 3-Tier Architecture
 
-🌐 Web Tier – Nginx
+ Web Tier – Nginx
 
-⚙️ Application Tier – Java Spring Application
+ Application Tier – Java Spring Application
 
-🗄️ Data Tier – MySQL, Memcached, RabbitMQ, Elasticsearch
+ Data Tier – MySQL, Memcached, RabbitMQ, Elasticsearch
 
-🧰 Platform & Tools
-1. ☁️ AWS EKS
-2. 🐳 Docker & Amazon ECR
-3. ☸️ Kubernetes & Helm
-4. 🏗️ Terraform (staging environment)
-5. 🔁 GitHub Actions
-6. 🔍 SonarQube
-7. 🧪 Maven
-8. 📊 Prometheus (Monitoring & Metrics)
-9. 📈 Grafana (Visualization & Dashboards)
+ Platform & Tools
+1.  AWS EKS
+2.  Docker & Amazon ECR
+3.  Kubernetes & Helm
+4.  Terraform (staging environment)
+5.  GitHub Actions
+6.  SonarQube
+7.  Maven
+8.  Prometheus (Monitoring & Metrics)
+9.  Grafana (Visualization & Dashboards)
 
 ![image alt](https://github.com/tabarak23/eks-java/blob/ed48dda421f10bf7639dbf8bb0a2e2c44eb42068/images/WhatsApp%20Image%202026-02-01%20at%2012.50.57%20PM.jpeg)
 
-## 🌿 Branching Strategy & Promotion Flow
+##  Branching Strategy & Promotion Flow
 
 This repository follows a two-branch strategy to ensure safe testing and controlled production releases.
 
-### 🌱 Branches
+###  Branches
 
 1. **staging branch**
    1. Used for development, testing, and validation
@@ -53,7 +53,7 @@ This repository follows a two-branch strategy to ensure safe testing and control
    2. Protected branch with required Pull Request approvals
    3. Only approved and tested changes are merged here
 
-### 🔁 Promotion Workflow (Staging → Production)
+###  Promotion Workflow (Staging → Production)
 
 1. Developers push changes to the `staging` branch
 2. CI pipeline runs:
@@ -66,15 +66,15 @@ This repository follows a two-branch strategy to ensure safe testing and control
    1. Terraform `apply` runs only on `main`
    2. Application is deployed to production EKS using Helm
 
-## 🔁 CI/CD Workflow Summary
+##  CI/CD Workflow Summary
 
-### 🏗️ terraform-infra.yml
+###  terraform-infra.yml
 
 1. Runs terraform plan on Pull Requests
 2. Requires Pull Request approval
 3. Runs terraform apply only on the main branch
 
-### 🚀 deploy.yml
+###  deploy.yml
 
 1. Maven build & unit tests
 2. SonarQube code quality scan
@@ -82,18 +82,18 @@ This repository follows a two-branch strategy to ensure safe testing and control
 4. Push Docker image to Amazon ECR
 5. Deploy application to AWS EKS using Helm
 
-## 📊 Monitoring & Observability
+##  Monitoring & Observability
 
 This project includes **full-stack monitoring and observability** using **Prometheus and Grafana**, deployed on **AWS EKS**.
 
-### 🔎 Monitoring Stack
+###  Monitoring Stack
 
-1. 📊 **Prometheus**
+1.  **Prometheus**
    - Collects Kubernetes and application metrics
    - Scrapes metrics from pods, nodes, and services
    - Provides time-series monitoring for cluster health
 
-2. 📈 **Grafana**
+2.  **Grafana**
    - Visualizes Prometheus metrics using dashboards
    - Provides real-time insights into application and cluster performance
    - Used for monitoring:
@@ -101,14 +101,14 @@ This project includes **full-stack monitoring and observability** using **Promet
      - Pod and node health
      - Application performance metrics
 
-### ⚙️ Integration Details
+###  Integration Details
 
 1. Prometheus and Grafana are deployed inside the EKS cluster
 2. Metrics are collected from Kubernetes workloads and infrastructure
 3. Dashboards help in proactive monitoring and troubleshooting
 4. Enables production-grade observability and alert readiness
 
-## 🔐 Security & Best Practices
+##  Security & Best Practices
 
 1. PR-based infrastructure changes
 2. Manual approval before production changes
@@ -165,7 +165,7 @@ This project includes **full-stack monitoring and observability** using **Promet
 │           ├── app-secret.yml         # Application secrets
 │           └── vproingress.yaml       # Ingress configuration
 │
-├── kubernetes/                        # Raw Kubernetes manifests (reference only)
+├── kubernetes/                        # Kubernetes manifests 
 │   └── vpro-app/
 │       ├── vproappdep.yml             # Application deployment
 │       ├── vproapp-service.yml        # Application service
@@ -237,7 +237,7 @@ Notes
 (ii)Images are production-ready and Kubernetes/EKS compatible
 
 
-## 🐳 Containerization
+##  Containerization
 
 1. Each tier has its own Dockerfile:
    1. Docker-files/app – Java application
@@ -246,7 +246,7 @@ Notes
 
 2. Docker images are versioned and pushed to Amazon ECR
 
-## ☸️ Kubernetes & Helm
+##  Kubernetes & Helm
 
 1. Kubernetes resources are managed using Helm
   ### Includes
@@ -272,11 +272,11 @@ Notes
 
 
 
-## 🔍 SonarCloud Setup
+##  SonarCloud Setup
 
 Follow the steps below to integrate SonarCloud with this repository.
 
-### 🧭 SonarCloud Configuration
+###  SonarCloud Configuration
 
 1. Go to https://sonarcloud.io
    ![image](https://github.com/tabarak23/eks-java/blob/e83e91c02a419d87b9e0415d06fbac653c1639ad/images/Screenshot%20from%202026-01-31%2021-19-04.png)
@@ -302,7 +302,7 @@ Follow the steps below to integrate SonarCloud with this repository.
     ![image](https://github.com/tabarak23/eks-java/blob/e83e91c02a419d87b9e0415d06fbac653c1639ad/images/Screenshot%20from%202026-01-31%2021-22-59.png)
 
 
-### 🔐 Generate SonarCloud Token
+###  Generate SonarCloud Token
 
 1. Navigate to **My Organizations**
    Select your organization
@@ -313,7 +313,7 @@ Follow the steps below to integrate SonarCloud with this repository.
 8. Copy the generated token
    ![image](https://github.com/tabarak23/eks-java/blob/e83e91c02a419d87b9e0415d06fbac653c1639ad/images/Screenshot%20from%202026-01-31%2021-26-55.png)
 
-### 🔑 GitHub Secrets Configuration
+###  GitHub Secrets Configuration
 
 1. Go to your GitHub repository
 2. Navigate to **Settings → Secrets and variables → Actions**
